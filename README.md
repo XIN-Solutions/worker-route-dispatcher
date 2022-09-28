@@ -11,6 +11,9 @@ To use:
     dispatcher.notFound(notFoundHandler);
     dispatcher.add("/post/:id*", getPostByIdAction);
 
+	const response = dispatcher.dispatch(request.url);
+    return response;
+
 Where `notFoundHandler` is:
     
     async function notFoundHandler(req, url) {
