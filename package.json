@@ -1,0 +1,24 @@
+{
+  "name": "worker-route-dispatcher",
+  "version": "1.0.0",
+  "description": "Simple route dispatcher for Cloudflare workers",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">= 16"
+  },
+  "keywords": [
+    "cloudflare",
+    "worker",
+    "dispatch",
+    "routing"
+  ],
+  "author": "Marnix Kok <marnix@xinsolutions.co.nz>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "path-match": "^1.2.4"
+  }
+}
