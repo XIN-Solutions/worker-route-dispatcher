@@ -31,11 +31,13 @@ export class RouteDispatcher {
     /**
      * Add a route with a particular pattern to the list of routes
      *
+     * @param method {'GET'|'POST'|'PUT'|'DELETE'|'OPTIONS'} the method to match for
      * @param pattern {string} the pattern to add
      * @param func {Function<Promise<*>>} the asynchronous function to call into
      */
-    add(pattern, func) {
+    add(method, pattern, func) {
         this.routes.push({
+            method,
             pattern,
             matcher: route(pattern),
             func
@@ -60,14 +62,29 @@ export class RouteDispatcher {
      */
     async dispatch(fullUrl, req) {
         const url = new URL(fullUrl).pathname;
+        const requestMethod = req.method?.toLowerCase() ?? 'get';
 
         for (const route of this.routes) {
+
+            // correct method?
+            const routeMethod = (route.method || 'get').toLowerCase();
+            if (requestMethod !== routeMethod) {
+                continue;
+            }
+
             const params = route.matcher(url);
             if (params === false) {
                 continue;
             }
 
-            return await route.func(params, req, url);
+            const response = await route.func(params, req, url);
+
+            // not wrapped in a response yet?
+            if (!(response instanceof Response)) {
+                return new Response(response);
+            }
+
+            return response;
         }
 
         if (this.notFoundFunc) {
