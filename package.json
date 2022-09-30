@@ -1,6 +1,6 @@
 {
   "name": "worker-route-dispatcher",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Simple route dispatcher for Cloudflare workers",
   "main": "index.js",
   "type": "module",
