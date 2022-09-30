@@ -80,11 +80,15 @@ export class RouteDispatcher {
             const response = await route.func(params, req, url);
 
             // not wrapped in a response yet?
-            if (!(response instanceof Response)) {
-                return new Response(response);
+            if (response?.constructor?.name === "Response") {
+                return response;
             }
 
-            return response;
+            return new Response(
+                JSON.stringify(response), {
+                    headers: { "Content-Type": "application/json"}
+                }
+            );
         }
 
         if (this.notFoundFunc) {
