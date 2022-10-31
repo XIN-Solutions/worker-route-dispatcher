@@ -36,7 +36,7 @@ export class DispatcherRouteProvider {
             (this.dispatcher?.routes ?? []).map(route => {
                 return {
                     path: route.pattern,
-                    method: route.method,
+                    method: route.method.toLowerCase(),
                     handle: route.func
                 };
             })
